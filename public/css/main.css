@@ -17878,6 +17878,22 @@ video {
   transition-delay: 1000ms;
 }
 
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+}
+
+.page-link {
+  display: block;
+  padding: 1rem;
+}
+
+.page-link:hover {
+  background-color: hsl(202, 80%, 80%);
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;

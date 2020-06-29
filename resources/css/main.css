@@ -3,3 +3,19 @@
 @tailwind components;
 
 @tailwind utilities;
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+}
+
+.page-link {
+    display: block;
+    padding: 1rem;
+}
+
+.page-link:hover {
+    background-color: hsl(202, 80%, 80%);
+}

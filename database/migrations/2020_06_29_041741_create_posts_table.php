@@ -18,8 +18,10 @@ class CreatePostsTable extends Migration
             $table->timestamps();
             $table->foreignId('user_id');
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->text('description');
+            // $table->enum('status', ['preview', 'published'])->default('preview');
+            $table->boolean('published')->default(True);
             $table->string('image')->nullable();
         });
     }

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use \Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -14,7 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = DB::table('posts')->where('published', True)->latest()->paginate(15);
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -24,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -35,7 +39,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        $post->title = $request->title;
+        $post->description = nl2br($request->description);
+        $post->user_id = Auth::id();
+        $post->slug = Str::slug(date('Ymd') . '-' . substr($request->title, 0, 22), '-');
+        $post->save();
+
+        return redirect()->route('posts.show', [$post->slug]);
     }
 
     /**
@@ -46,7 +57,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show', ['post' => $post]);
     }
 
     /**

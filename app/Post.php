@@ -12,4 +12,10 @@ class Post extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    // Laravel < 7
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 }
