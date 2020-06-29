@@ -68,7 +68,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
@@ -80,7 +80,11 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post->title = $request->title;
+        $post->description = nl2br($request->description);
+        $post->slug = Str::slug(date('Ymd') . '-' . substr($request->title, 0, 22), '-');
+        $post->save();
+        return redirect()->route('posts.show', [$post->slug]);
     }
 
     /**
@@ -91,6 +95,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }

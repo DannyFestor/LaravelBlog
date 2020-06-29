@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="/posts/{{ $post->slug }}">{{ $post->title }}</a>
+    <a href="{{ route('posts.show', [$post->slug]) }}">{{ $post->title }}</a>
     {!! $post->description !!}
-    <a href="{{ url()->previous() }}">Back!</a>
+    <a href="{{ route('posts.edit', [$post->slug]) }}">Edit</a>
+    <a href="{{ route('posts.index') }}">Back!</a>
 @endsection
