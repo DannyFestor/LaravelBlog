@@ -1,23 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
+<div class="container mx-auto flex">
+    <div class="flex flex-wrap space-between flex-grow md:w-4/6 bg-gray-100">
+        <div class="p-2 w-full md:w-2/6">
+            <p class="p-2 bg-gray-500">
+                Content
+            </p>
+        </div>
+        <div class="p-2 w-full md:w-2/6">
+            <p class="p-2 bg-gray-500">
+                Content
+            </p>
+        </div>
+        <div class="p-2 w-full md:w-2/6">
+            <p class="p-2 bg-gray-500">
+                Content
+            </p>
+        </div>
+        <div class="p-2 w-full md:w-2/6">
+            <p class="p-2 bg-gray-500">
+                Content
+            </p>
+        </div>
+        <div class="p-2 w-full md:w-2/6">
+            <p class="p-2 bg-gray-500">
+                Content
+            </p>
+        </div>
+        <div class="p-2 w-full md:w-2/6">
+            <p class="p-2 bg-gray-500">
+                Content
+            </p>
         </div>
     </div>
+    <div class="w-2/6 bg-gray-300 hidden md:block">Side Content</div>
 </div>
 @endsection
