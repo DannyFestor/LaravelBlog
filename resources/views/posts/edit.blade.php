@@ -1,17 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-@if ($errors->any())
-ERROR
-<div>
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-
 <form class="bg-white shadow-md rounded px-8 py-4 mx-auto" action='{{ route("posts.update", [$post->slug]) }}' method='POST'>
     @csrf
     @method('PUT')
@@ -32,14 +21,4 @@ ERROR
         </button>
       </div>
     </form>
-
-    <form class="bg-white shadow-md rounded px-8 py-4 mx-auto" action='{{ route("posts.destroy", [$post->slug]) }}' method='POST'>
-        @csrf
-        @method('DELETE')
-          <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-              Delete
-            </button>
-          </div>
-        </form>
 @endsection

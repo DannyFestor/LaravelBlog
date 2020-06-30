@@ -4,6 +4,7 @@
         @include('includes.nav')
 
         <main class="container mx-auto mt-16">
+            @include('includes.error')
             @yield('content')
         </main>
     </div>

@@ -1,17 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if ($errors->any())
-        ERROR
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form class="bg-white shadow-md rounded px-8 py-4 mx-auto" action='{{ route("posts.store") }}' method='POST'>
     @csrf
       <div class="mb-4">

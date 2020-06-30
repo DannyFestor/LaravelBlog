@@ -20,7 +20,13 @@ class StoreBlogPost extends FormRequest
         $post = $this->route('post');
         // dd($post, $this->user(), $this->user()->can('update-post', $post));
         // return true;
-        return $this->user()->can('update-post', $post);
+        if ($this->getMethod() == 'PUT' || $this->getMethod() == 'DELETE') {
+            return $this->user()->can('update-post', $post);
+        } elseif ($this->getMethod() == 'POST') {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -30,6 +36,10 @@ class StoreBlogPost extends FormRequest
      */
     public function rules()
     {
+        if ($this->getMethod() == 'DELETE') {
+            return [];
+        }
+
         $rules = [];
 
         if ($this->getMethod() == 'POST') {
