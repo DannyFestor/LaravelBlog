@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Post;
 
 // Created with
 // $ php artisan make:request StoreBlogPost
@@ -16,7 +17,10 @@ class StoreBlogPost extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $post = $this->route('post');
+        // dd($post, $this->user(), $this->user()->can('update-post', $post));
+        // return true;
+        return $this->user()->can('update-post', $post);
     }
 
     /**
@@ -26,9 +30,7 @@ class StoreBlogPost extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'description' => 'required'
-        ];
+        $rules = [];
 
         if ($this->getMethod() == 'POST') {
             $rules += ['title' => 'required|max:255|unique:posts'];
@@ -36,22 +38,26 @@ class StoreBlogPost extends FormRequest
             $rules += ['title' => 'required|max:255|unique:posts,title,'.$this->post['id']];
         }
 
+        $rules += [
+            'description' => 'required'
+        ];
+
         return $rules;
     }
 
     public function messages()
     {
         return [
-            'required' => ':attribute ist benötigt',
-            'unique'   => ':attribute muss einzigartig sein'
+            'required' => 'Please put in a :attribute',
+            'unique'   => ':attribute must be unique'
         ];
     }
 
     public function attributes()
     {
         return [
-            'title' => 'Ein Titel',
-            'description' => 'Ein Text'
+            'title' => 'Title',
+            'description' => 'Description'
         ];
     }
 }
