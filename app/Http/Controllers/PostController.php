@@ -6,7 +6,8 @@ use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use \Illuminate\Support\Str;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -39,6 +40,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // $data = $request->validate([
+        //     'title' => 'required|unique:posts|max:255',
+        //     'description' => 'required'
+        // ]);
+
+        /* Advanced Validator */
+        $rules = [
+          'title'       => 'required|unique:posts|max:255',
+          'description' => 'required'
+        ];
+        $messages = [
+          'required' => ':attribute ist benötigt',
+          'unique'   => ':attribute muss einzigartig sein'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if( $validator->fails() )
+        {
+            // dd($validator);
+            return redirect(route('posts.create'))->withErrors($validator)->withInput();
+        }
+
         $post = new Post;
         $post->title = $request->title;
         $post->description = nl2br($request->description);
