@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreBlogPost;
 
 class PostController extends Controller
 {
@@ -38,7 +39,8 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    // public function store(Request $request)
+    public function store(StoreBlogPost $request)
     {
         // $data = $request->validate([
         //     'title' => 'required|unique:posts|max:255',
@@ -46,21 +48,24 @@ class PostController extends Controller
         // ]);
 
         /* Advanced Validator */
-        $rules = [
-          'title'       => 'required|unique:posts|max:255',
-          'description' => 'required'
-        ];
-        $messages = [
-          'required' => ':attribute ist benötigt',
-          'unique'   => ':attribute muss einzigartig sein'
-        ];
+        // $rules = [
+        //   'title'       => 'required|unique:posts|max:255',
+        //   'description' => 'required'
+        // ];
+        // $messages = [
+        //   'required' => ':attribute ist benötigt',
+        //   'unique'   => ':attribute muss einzigartig sein'
+        // ];
 
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if( $validator->fails() )
-        {
-            // dd($validator);
-            return redirect(route('posts.create'))->withErrors($validator)->withInput();
-        }
+        // $validator = Validator::make($request->all(), $rules, $messages);
+        // if( $validator->fails() )
+        // {
+            //     // dd($validator);
+            //     return redirect(route('posts.create'))->withErrors($validator)->withInput();
+            // }
+
+        /* Use FormRequest */
+        $validated = $request->validated();
 
         $post = new Post;
         $post->title = $request->title;
@@ -101,8 +106,10 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(StoreBlogPost $request, Post $post)
     {
+        $validated = $request->validated();
+
         $post->title = $request->title;
         $post->description = nl2br($request->description);
         $post->slug = Str::slug(date('Ymd') . '-' . substr($request->title, 0, 22), '-');
