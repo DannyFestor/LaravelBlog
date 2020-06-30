@@ -69,7 +69,8 @@ class PostController extends Controller
 
         $post = new Post;
         $post->title = $request->title;
-        $post->description = nl2br($request->description);
+        // $post->description = nl2br($request->description);
+        $post->description = $request->description;
         $post->user_id = Auth::id();
         $post->slug = Str::slug(date('Ymd') . '-' . substr($request->title, 0, 22), '-');
         $post->save();
