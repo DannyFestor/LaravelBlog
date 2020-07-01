@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreTag;
 
 class TagController extends Controller
 {
@@ -35,8 +36,10 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTag $request)
     {
+        $validated = $request->validated();
+
         $tag = new Tag;
         $tag->name = $request->name;
         $tag->save();
@@ -77,8 +80,9 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(StoreTag $request, Tag $tag)
     {
+        $validated = $request->validated();
         $tag->name = $request->name;
         $tag->save();
 
@@ -91,8 +95,9 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy(StoreTag $request, Tag $tag)
     {
+        $validated = $request->validated();
         $tag->delete();
         return redirect(route('tags.index'));
     }

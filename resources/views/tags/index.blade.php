@@ -2,6 +2,7 @@
 
 @section('content')
     <section class="flex flex-col shadow rounded p-4 items-stretch bg-white">
+        <a href="{{ route('tags.create') }}" class="text-blue-600 hover:text-blue-400">New Tag</a>
         @foreach ($tags as $tag)
             <div class="w-full flex flex-col sm:flex-row flex-wrap justify-between mb-2 items-center">
                 <div>{{ $tag->name }}</div>
