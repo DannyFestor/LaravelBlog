@@ -30,7 +30,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $tags = DB::table('tags')->orderBy('name', 'asc')->get();
+        return view('posts.create', ["tags" => $tags]);
     }
 
     /**
@@ -65,6 +66,8 @@ class PostController extends Controller
             // }
 
         /* Use FormRequest */
+        // dd($request, explode(",", $request->tag_ids));
+
         $validated = $request->validated();
 
         $post = new Post;
@@ -73,7 +76,9 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->user_id = Auth::id();
         $post->slug = Str::slug(date('Ymd') . '-' . substr($request->title, 0, 22), '-');
+
         $post->save();
+        $post->tags()->attach(explode(",", $request->tag_ids));
 
         return redirect()->route('posts.show', [$post->slug]);
     }

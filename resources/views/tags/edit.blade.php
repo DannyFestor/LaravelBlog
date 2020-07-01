@@ -16,4 +16,12 @@
         </button>
       </div>
     </form>
+    <form class="inline-block" action='{{ route("tags.destroy", [$tag->name]) }}' method='POST'>
+        @csrf
+        @method('DELETE')
+        <button class="w-24 bg-red-600 hover:bg-red-400 text-gray-100 p-3 rounded" type="submit">
+            Delete
+        </button>
+    </form>
+    <a href="{{ route('tags.show', $tag->name) }}">Back!</a>
 @endsection

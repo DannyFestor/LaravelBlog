@@ -8,11 +8,15 @@
             </h1>
         </section>
         <section id="metainfo" class="text-right">
-
             <p>
                 {{ $post->user->name }} at
                 {{ date('Y/m/d H:i', strtotime($post->created_at)) }}
             </p>
+        </section>
+        <section id="tags">
+            @foreach ($post->tags()->get() as $tag)
+                <a href="{{ route('tags.show', [$tag->name]) }}">#{{ $tag->name }}</a>
+            @endforeach
         </section>
         <section id="description">
             {!! nl2br(e($post->description)) !!}
