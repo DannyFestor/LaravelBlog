@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         factory(App\User::class, 10)->create()->each(function ($user) {
             $user->posts()->createMany(factory(App\Post::class, 10)->make()->toArray());
         });
+
+        factory(App\Tag::class, 20)->create();
     }
 }
