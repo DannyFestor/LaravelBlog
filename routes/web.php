@@ -29,6 +29,14 @@ Route::get('/posts/{post:slug}/edit', 'PostController@edit')->middleware('auth')
 Route::put('/posts/{post:slug}', 'PostController@update')->middleware('auth')->name('posts.update');
 Route::delete('/posts/{post:slug}', 'PostController@destroy')->middleware('auth')->name('posts.destroy');
 
+// Route::get('/posts/{post:slug}/comments', 'CommentController@index')->name('comments.index');
+Route::get('/posts/{post:slug}/comments/create', 'CommentController@create')->name('comments.create');
+Route::post('/posts/{post:slug}/comments', 'CommentController@store')->middleware('auth')->name('comments.store');
+// Route::get('/posts/{post:slug}/comments/{comment:id}', 'CommentController@show')->name('comments.show');
+Route::get('/posts/{post:slug}/comments/{comment}/edit', 'CommentController@edit')->middleware('auth')->name('comments.edit');
+Route::put('/posts/{post:slug}/comments/{comment}', 'CommentController@update')->middleware('auth')->name('comments.update');
+Route::delete('/posts/{post:slug}/comments/{comment}', 'CommentController@destroy')->middleware('auth')->name('comments.destroy');
+
 Route::get('/tags', 'TagController@index')->name('tags.index');
 Route::get('/tags/create', 'TagController@create')->name('tags.create');
 Route::post('/tags', 'TagController@store')->middleware('auth')->name('tags.store');

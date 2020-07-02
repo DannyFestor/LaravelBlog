@@ -20,7 +20,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')->where('published', True)->latest()->paginate(15);
+        $posts = Post::where('published', True)->latest()->paginate(15);
+        // $posts = DB::table('posts')->where('published', True)->latest()->paginate(15);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -92,8 +93,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $comments = $post->comments()->get();
         $tags = $post->tags()->orderBy('name', 'asc')->get();
-        return view('posts.show', ['post' => $post, 'tags' => $tags]);
+        return view('posts.show', ['post' => $post, 'comments' => $comments, 'tags' => $tags]);
     }
 
     /**

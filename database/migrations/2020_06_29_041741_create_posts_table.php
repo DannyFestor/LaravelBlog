@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('user');
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description');
