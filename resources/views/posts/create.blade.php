@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form class="bg-white shadow-md rounded px-8 py-4 mx-auto" action='{{ route("posts.store") }}' method='POST'>
+    <form class="px-8 py-4 mx-auto" action='{{ route("posts.store") }}' method='POST'>
     @csrf
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">

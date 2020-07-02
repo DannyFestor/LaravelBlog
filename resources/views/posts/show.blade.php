@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <article class="flex flex-col items-stretch bg-white p-5">
+    <article class="flex flex-col items-stretch p-5">
         <section id="title" class="w-full">
             <h1 class="text-3xl">
                 {{ $post->title }}
@@ -14,7 +14,7 @@
             </p>
         </section>
         <section id="tags">
-            @foreach ($post->tags()->get() as $tag)
+            @foreach ($tags as $tag)
                 <a href="{{ route('tags.show', [$tag->name]) }}">#{{ $tag->name }}</a>
             @endforeach
         </section>

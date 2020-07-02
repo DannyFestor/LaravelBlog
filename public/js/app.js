@@ -1957,13 +1957,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["tags"],
+  props: ["tags", "editTags"],
   data: function data() {
     return {
       selected: '',
@@ -1979,8 +1974,7 @@ __webpack_require__.r(__webpack_exports__);
       })[0];
 
       if (!this.addedTags.includes(item)) {
-        this.addedTags.push(item);
-        this.addedTags.sort(function (a, b) {
+        this.addedTags.push(item).sort(function (a, b) {
           if (a.name < b.name) return -1;
           if (a.name > b.name) return 1;
           return 0;
@@ -1993,6 +1987,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
+  mounted: function mounted() {
+    var ids = this.editTags.map(function (v) {
+      return v.id;
+    });
+    this.addedTags = this.tags.filter(function (v) {
+      return ids.includes(v.id);
+    });
+  },
   computed: {
     ids: function ids() {
       return this.addedTags.map(function (v) {
@@ -2002,6 +2004,13 @@ __webpack_require__.r(__webpack_exports__);
         if (a > b) return 1;
         return 0;
       }).toString();
+    },
+    optionTags: function optionTags() {
+      var _this2 = this;
+
+      return this.tags.filter(function (v) {
+        return !_this2.addedTags.includes(v);
+      });
     }
   }
 });
@@ -37601,8 +37610,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("p", [_vm._v("\n        " + _vm._s(_vm.selected) + "\n    ")]),
-      _vm._v(" "),
       _c(
         "select",
         {
@@ -37631,7 +37638,7 @@ var render = function() {
             }
           }
         },
-        _vm._l(_vm.tags, function(tag) {
+        _vm._l(_vm.optionTags, function(tag) {
           return _c("option", { key: tag.id, domProps: { value: tag.id } }, [
             _vm._v("\n            " + _vm._s(tag.name) + "\n        ")
           ])
@@ -37679,12 +37686,10 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _c("div", [
-        _c("input", {
-          attrs: { type: "hidden", name: "tag_ids" },
-          domProps: { value: _vm.ids }
-        })
-      ])
+      _c("input", {
+        attrs: { type: "hidden", name: "tag_ids" },
+        domProps: { value: _vm.ids }
+      })
     ],
     2
   )

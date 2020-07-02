@@ -2,8 +2,6 @@
 
 @tailwind components;
 
-@tailwind utilities;
-
 .pagination {
     display: flex;
     flex-wrap: wrap;
@@ -19,3 +17,14 @@
 .page-link:hover {
     background-color: hsl(202, 80%, 80%);
 }
+
+.hyperlink {
+    @apply text-blue-500;
+}
+
+.hyperlink:hover {
+    @apply text-blue-700 bg-blue-100;
+}
+
+@tailwind utilities;
+

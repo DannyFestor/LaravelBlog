@@ -29,6 +29,17 @@ class StoreBlogPost extends FormRequest
         }
     }
 
+    protected function prepareForValidation()
+    {
+        // Replace string of ids with array
+        // "1,2" -> ["1", "2"]
+        if (strlen($this->tag_ids) > 0) {
+            $this->merge(['tag_ids' => explode(',', $this->tag_ids)]);
+        } else {
+            $this->merge(['tag_ids' => []]);
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -49,7 +60,9 @@ class StoreBlogPost extends FormRequest
         }
 
         $rules += [
-            'description' => 'required'
+            'description' => 'required',
+            'tag_ids'     => 'array',
+            'tag_ids.*'   => 'regex:/^[0-9]+$/i|exists:tags,id'
         ];
 
         return $rules;
@@ -59,7 +72,7 @@ class StoreBlogPost extends FormRequest
     {
         return [
             'required' => 'Please put in a :attribute',
-            'unique'   => ':attribute must be unique'
+            'unique'   => ':attribute must be unique',
         ];
     }
 
@@ -67,7 +80,7 @@ class StoreBlogPost extends FormRequest
     {
         return [
             'title' => 'Title',
-            'description' => 'Description'
+            'description' => 'Description',
         ];
     }
 }

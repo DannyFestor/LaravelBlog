@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = DB::table('tags')->orderBy('name', 'asc')->get();
+        $tags = Tag::orderBy('name', 'asc')->get();
         return view('posts.create', ["tags" => $tags]);
     }
 
@@ -68,6 +69,8 @@ class PostController extends Controller
         /* Use FormRequest */
         // dd($request, explode(",", $request->tag_ids));
 
+        dd($request->tag_ids, count($request->tag_ids));
+
         $validated = $request->validated();
 
         $post = new Post;
@@ -78,7 +81,7 @@ class PostController extends Controller
         $post->slug = Str::slug(date('Ymd') . '-' . substr($request->title, 0, 22), '-');
 
         $post->save();
-        $post->tags()->attach(explode(",", $request->tag_ids));
+        $post->tags()->sync($request->tag_ids);
 
         return redirect()->route('posts.show', [$post->slug]);
     }
@@ -91,7 +94,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', ['post' => $post]);
+        $tags = $post->tags()->orderBy('name', 'asc')->get();
+        return view('posts.show', ['post' => $post, 'tags' => $tags]);
     }
 
     /**
@@ -102,7 +106,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', ['post' => $post]);
+        $tags = Tag::orderBy('name', 'asc')->get();
+        return view('posts.edit', ['post' => $post, 'tags' => $tags]);
     }
 
     /**
@@ -120,6 +125,9 @@ class PostController extends Controller
         $post->description = nl2br($request->description);
         $post->slug = Str::slug(date('Ymd') . '-' . substr($request->title, 0, 22), '-');
         $post->save();
+
+        $post->tags()->sync($request->tag_ids);
+
         return redirect()->route('posts.show', [$post->slug]);
     }
 
