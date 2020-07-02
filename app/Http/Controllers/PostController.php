@@ -69,8 +69,6 @@ class PostController extends Controller
         /* Use FormRequest */
         // dd($request, explode(",", $request->tag_ids));
 
-        dd($request->tag_ids, count($request->tag_ids));
-
         $validated = $request->validated();
 
         $post = new Post;

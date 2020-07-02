@@ -27,7 +27,8 @@ export default {
         add_item(e) {
             const item = this.tags.filter(v => v.id === Number(this.selected))[0]
             if(!this.addedTags.includes(item)) {
-                this.addedTags.push(item).sort((a, b) => {
+                this.addedTags.push(item)
+                this.addedTags = this.addedTags.sort((a, b) => {
                     if (a.name < b.name) return -1
                     if (a.name > b.name) return 1
                     return 0
@@ -39,8 +40,10 @@ export default {
         }
     },
     mounted() {
-        const ids = this.editTags.map(v => v.id);
-        this.addedTags = this.tags.filter(v => ids.includes(v.id));
+        if (this.editTags !== undefined) {
+            const ids = this.editTags.map(v => v.id)
+            this.addedTags = this.tags.filter(v => ids.includes(v.id))
+        }
     },
     computed: {
         ids() {

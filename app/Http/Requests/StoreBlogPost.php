@@ -17,6 +17,8 @@ class StoreBlogPost extends FormRequest
      */
     public function authorize()
     {
+        dd($this->user());
+
         $post = $this->route('post');
         // dd($post, $this->user(), $this->user()->can('update-post', $post));
         // return true;

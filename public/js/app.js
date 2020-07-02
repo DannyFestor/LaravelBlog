@@ -1974,7 +1974,8 @@ __webpack_require__.r(__webpack_exports__);
       })[0];
 
       if (!this.addedTags.includes(item)) {
-        this.addedTags.push(item).sort(function (a, b) {
+        this.addedTags.push(item);
+        this.addedTags = this.addedTags.sort(function (a, b) {
           if (a.name < b.name) return -1;
           if (a.name > b.name) return 1;
           return 0;
@@ -1988,12 +1989,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var ids = this.editTags.map(function (v) {
-      return v.id;
-    });
-    this.addedTags = this.tags.filter(function (v) {
-      return ids.includes(v.id);
-    });
+    if (this.editTags !== undefined) {
+      var ids = this.editTags.map(function (v) {
+        return v.id;
+      });
+      this.addedTags = this.tags.filter(function (v) {
+        return ids.includes(v.id);
+      });
+    }
   },
   computed: {
     ids: function ids() {
